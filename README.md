@@ -1,6 +1,5 @@
-# Big Data Analysis
-1. Data validation focusing on primary and foreign keys, as well as important metrics such as price and rating.
-
+## Big Data Analysis using Big Query and Visualisation with Looker Studio
+### 1. Data validation focusing on primary and foreign keys, as well as important metrics such as price and rating.
 ```sql
 SELECT
   COUNT(*) AS ft_total_rows,
@@ -35,9 +34,9 @@ SELECT
   COUNTIF(product_id IS NULL) AS null_product_id,
 FROM kimia_farma.kf_inventory;
 ```
-2. Analysis table, including aggregate
 
-  a. To have the full joined tables displayed, to have in check which columns belong to which table
+### 2. Analysis table, including aggregate
+#### a. To have the full joined tables displayed, to have in check which columns belong to which table
   ```sql
 SELECT *
 FROM kimia_farma.kf_final_transaction fintrans
@@ -47,12 +46,8 @@ left join kimia_farma.kf_kantor_cabang cabang
 on cast(fintrans.branch_id as string)=cast(cabang.branch_id as string)
 limit 5;
 ```
-
-  b. listing the already available columns in the new table (tabel_analisa)
-  c. find which columns are to be created from calculated fields
-    > presentase_gross_laba
-    > nett_sales
-    > nett_profit
+#### b. find which columns are to be created from calculated fields. Then use CTEs to reduce repetition of queries.
+    
 ```sql
 
 create table kimia_farma.tabel_analisa as
@@ -98,5 +93,13 @@ select
   nett_sales * presentase_gross_laba AS nett_profit,
   rating_transaksi
 from calc_field;
-
 ```
+
+### Result Table
+<img width="1623" height="605" alt="Screenshot 2026-04-10 215719" src="https://github.com/user-attachments/assets/f1ece53d-5ed5-4093-a700-d605f0ebfe4b" />
+
+### Dashboard
+<img width="1274" height="901" alt="Screenshot 2026-04-10 221924" src="https://github.com/user-attachments/assets/8d0e254a-a373-40ce-81e0-de16bf7bd846" />
+
+
+
