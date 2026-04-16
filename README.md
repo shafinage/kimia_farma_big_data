@@ -1,4 +1,4 @@
-## Big Data Analysis using Big Query and Visualisation with Looker Studio
+## Big Data Analysis using Big Query and Visualisation with Data Studio
 ### 1. Data validation focusing on primary and foreign keys, as well as important metrics such as price and rating.
 ```sql
 SELECT
@@ -49,9 +49,8 @@ limit 5;
 #### b. find which columns are to be created from calculated fields. Then use CTEs to reduce repetition of queries.
     
 ```sql
-
 create table kimia_farma.tabel_analisa as
-with
+with 
 avail_columns as ( #CTE 1:putting all ready columns mandated
   select 
     fintrans.transaction_id,
@@ -67,13 +66,13 @@ avail_columns as ( #CTE 1:putting all ready columns mandated
     fintrans.price as actual_price,
     fintrans.discount_percentage,
     fintrans.rating as rating_transaksi
-  FROM kimia_farma.kf_final_transaction fintrans
-  LEFT JOIN kimia_farma.kf_products prod
+  FROM kimia_farma.kf_final_transaction fintrans #rename
+  LEFT JOIN kimia_farma.kf_products prod #rename
   on fintrans.product_id=prod.product_id
-  left join kimia_farma.kf_kantor_cabang cabang
+  left join kimia_farma.kf_kantor_cabang cabang #rename
   on cast(fintrans.branch_id as string)=cast(cabang.branch_id as string)
   ),
-   
+
 calc_field as ( #CTE 2: calling CTE 1, and add the calculated columns
   select *, #calling all column in CTE avail_columns
     case    #adding the calculated fields
@@ -82,7 +81,7 @@ calc_field as ( #CTE 2: calling CTE 1, and add the calculated columns
      when actual_price > 100000 and actual_price <= 300000 then 0.20
      when actual_price > 300000 and actual_price <= 500000 then 0.25
      when actual_price > 500000 then 0.3
-    end as presentase_gross_laba,
+    end as presentase_gross_laba, #calculated column
 
   actual_price * (1 - discount_percentage) as nett_sales
 
