@@ -51,7 +51,8 @@ limit 5;
 ```sql
 
 create table kimia_farma.tabel_analisa as
-with avail_columns as ( #CTE 1:putting all ready columns mandated
+with
+avail_columns as ( #CTE 1:putting all ready columns mandated
   select 
     fintrans.transaction_id,
     fintrans.date,
@@ -72,7 +73,6 @@ with avail_columns as ( #CTE 1:putting all ready columns mandated
   left join kimia_farma.kf_kantor_cabang cabang
   on cast(fintrans.branch_id as string)=cast(cabang.branch_id as string)
   ),
-
    
 calc_field as ( #CTE 2: calling CTE 1, and add the calculated columns
   select *, #calling all column in CTE avail_columns
@@ -98,7 +98,7 @@ from calc_field;
 ### Result Table
 <img width="1623" height="605" alt="Screenshot 2026-04-10 215719" src="https://github.com/user-attachments/assets/f1ece53d-5ed5-4093-a700-d605f0ebfe4b" />
 
-### Dashboard
+### [Dashboard](https://datastudio.google.com/reporting/dc7fc033-2f3c-4ff1-84a4-abe013a95a88)
 <img width="1274" height="901" alt="Screenshot 2026-04-10 221924" src="https://github.com/user-attachments/assets/8d0e254a-a373-40ce-81e0-de16bf7bd846" />
 
 
